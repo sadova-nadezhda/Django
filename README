@@ -1,0 +1,27 @@
+Для создания виртуальной среды выполним следующую команду:
+python -m venv .venv
+
+Активация виртуальной среды
+.venv\Scripts\activate.bat
+
+Установка Django
+После активации виртуальной среды для установки Django выполним в консоли следующую команду
+python -m pip install Django
+
+Она устанавливает последнюю версию Django.
+
+Проверка установки
+python
+>>> import django
+>>> print(django.get_version())
+
+Деактивация виртуальной среды
+deactivate
+
+Создание первого проекта
+django-admin предоставляет ряд команд для управления проектом Django. В частности, для создания проекта применяется команда startproject. Этой команде в качестве аргумента передается название проекта.
+
+c:\django>django-admin startproject nameProject
+
+Запустим проект на выполнение
+python manage.py runserver
