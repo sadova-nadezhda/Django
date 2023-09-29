@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'index/css/style.css'%}" rel="stylesheet" />
+</head>
+<body>
+    {% block mainmenu %}
+        <header class="header">
+            <div class="container">
+                <div class="header__container">
+                    <a href="{% url 'home' %}" class="header__logo"><img src="{% static 'index/images/logo.png' %}"></a>
+                    <ul class="header__menu menu">
+                        {% for item in menu %}
+                        <li class="menu__item"><a href="#">{{ item }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </header>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
