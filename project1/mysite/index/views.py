@@ -23,10 +23,13 @@ menu = [
 ]
 def main(request):
     posts = Info.objects.all()
+    cats = Category.objects.all()
     context = {
         'title':'Компьютерная игры',
         'menu': menu,
-        'posts': posts
+        'posts': posts,
+        'cats': cats,
+        'cat_selected': 0
     }
     return render(request, 'index/index.html', context=context)
 def about(request):
@@ -41,6 +44,8 @@ def login(request):
     return HttpResponse('Авторизация')
 def post(request, post_id):
     return HttpResponse(f'пост с id = {post_id}')
+def category(request, cat_id):
+    return HttpResponse(f'category с id = {cat_id}')
 
 # def category(request, catid):
 #     # if request.GET:
