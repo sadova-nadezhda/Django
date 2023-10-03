@@ -14,14 +14,25 @@
                     <a href="{% url 'home' %}" class="header__logo"><img src="{% static 'index/images/logo.png' %}"></a>
                     <ul class="header__menu menu">
                         {% for item in menu %}
-                        <li class="menu__item"><a href="#">{{ item }}</a></li>
+                        <li class="menu__item"><a href="{% url item.url_name %}">{{ item.title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
         </header>
     {% endblock %}
-    {% block content %}
+    {% block main %}
+    <main>
+        {% block sidebar %}
+            <ul class="sidebar">
+                <li class="selected">Все категории</li>
+                <li><a>Шутер</a></li>
+                <li><a>РПГ</a></li>
+            </ul>
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+    </main>
     {% endblock %}
 </body>
 </html>

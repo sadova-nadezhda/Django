@@ -15,12 +15,32 @@ from .models import *
     #     </body>
     # </html>
     # ''')
-menu = ['Главная', 'О компании', 'Контакты']
+menu = [
+    {'title': 'Главная', 'url_name': 'home'},
+    {'title': 'О компании', 'url_name': 'about'},
+    {'title': 'Контакты', 'url_name': 'contact'},
+    {'title': 'Войти', 'url_name': 'login'}
+]
 def main(request):
     posts = Info.objects.all()
-    return render(request, 'index/index.html', {'title':'Компьютерная игры', 'menu': menu, 'posts': posts})
+    context = {
+        'title':'Компьютерная игры',
+        'menu': menu,
+        'posts': posts
+    }
+    return render(request, 'index/index.html', context=context)
 def about(request):
-    return render(request, 'index/about.html', {'title':'О компании', 'menu': menu})
+    context = {
+        'title':'Компьютерная игры',
+        'menu': menu
+    }
+    return render(request, 'index/about.html', context=context)
+def contact(request):
+    return HttpResponse('Обратная связь')
+def login(request):
+    return HttpResponse('Авторизация')
+def post(request, post_id):
+    return HttpResponse(f'пост с id = {post_id}')
 
 # def category(request, catid):
 #     # if request.GET:
