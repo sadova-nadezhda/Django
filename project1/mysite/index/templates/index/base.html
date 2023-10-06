@@ -1,4 +1,5 @@
 {% load static %}
+{% load index_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,13 +31,7 @@
                 {% else %}
                     <li><a href="{% url 'home' %}">Все категории</a></li>
                 {% endif %}
-                {% for cat in cats %}
-                    {% if cat.pk == cat_selected %}
-                        <li class="selected">{{ cat.name }}</li>
-                    {% else %}
-                        <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
-                    {% endif %}
-                {% endfor %}
+                {% show_categories  cat_selected=cat_selected %}
                 <!--<li class="selected">Все категории</li>-->
                 <!--<li><a>Шутер</a></li>-->
                 <!--<li><a>РПГ</a></li>-->

@@ -23,12 +23,10 @@ menu = [
 ]
 def main(request):
     posts = Info.objects.all()
-    cats = Category.objects.all()
     context = {
         'title':'Компьютерная игры',
         'menu': menu,
         'posts': posts,
-        'cats': cats,
         'cat_selected': 0
     }
     return render(request, 'index/index.html', context=context)
@@ -48,12 +46,10 @@ def category(request, cat_id):
     posts = Info.objects.filter(category_id=cat_id)
     if len(posts) == 0:
         raise Http404()
-    cats = Category.objects.all()
     context = {
         'title':'Компьютерная игры',
         'menu': menu,
         'posts': posts,
-        'cats': cats,
         'cat_selected': cat_id
     }
     return render(request, 'index/index.html', context=context)
