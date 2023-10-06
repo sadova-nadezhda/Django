@@ -18,3 +18,13 @@ def show_categories(sort=None, cat_selected=0):
         cats = Category.objects.order_by(sort)
     return {'cats': cats, 'cat_selected': cat_selected}
 
+@register.inclusion_tag('index/header.html')
+def show_header():
+    menu = [
+        {'title': 'Главная', 'url_name': 'home'},
+        {'title': 'О компании', 'url_name': 'about'},
+        {'title': 'Контакты', 'url_name': 'contact'},
+        {'title': 'Войти', 'url_name': 'login'}
+    ]
+    return {'menu': menu}
+

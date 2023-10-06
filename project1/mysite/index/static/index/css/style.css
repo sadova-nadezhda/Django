@@ -132,6 +132,23 @@ body {
     margin-bottom: 10px;
     background: #fff;
 }
+/* post */
+.post__title {
+    margin-bottom: 30px;
+}
+.post__wrap {
+    display: grid;
+    grid-template-columns: 25% 1fr;
+    gap: 20px;
+}
+.post__img {
+    height: 400px;
+}
+.post__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 /* main */
 .main {
     display: grid;

@@ -1,0 +1,17 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+    <div class="content">
+        <h1 class="post__title">{{post.title}}</h1>
+        <div class="post__wrap">
+            {% if post.photo %}
+                <div class="post__img"><img src="{{ post.photo.url }}"></div>
+            {% endif %}
+            <div class="post__desc">
+                {% autoescape off %}
+                {{ post.content | linebreaks }}
+                {% endautoescape %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

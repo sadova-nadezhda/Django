@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 
 # Create your views here.
@@ -15,17 +15,11 @@ from .models import *
     #     </body>
     # </html>
     # ''')
-menu = [
-    {'title': 'Главная', 'url_name': 'home'},
-    {'title': 'О компании', 'url_name': 'about'},
-    {'title': 'Контакты', 'url_name': 'contact'},
-    {'title': 'Войти', 'url_name': 'login'}
-]
+
 def main(request):
     posts = Info.objects.all()
     context = {
         'title':'Компьютерная игры',
-        'menu': menu,
         'posts': posts,
         'cat_selected': 0
     }
@@ -33,7 +27,6 @@ def main(request):
 def about(request):
     context = {
         'title':'Компьютерная игры',
-        'menu': menu
     }
     return render(request, 'index/about.html', context=context)
 def contact(request):
@@ -41,14 +34,19 @@ def contact(request):
 def login(request):
     return HttpResponse('Авторизация')
 def post(request, post_id):
-    return HttpResponse(f'пост с id = {post_id}')
+    post = get_object_or_404(Info, pk=post_id)
+    context = {
+        'title': post.title,
+        'post': post,
+        'cat_selected': post.category_id
+    }
+    return render(request, 'index/post.html', context=context)
 def category(request, cat_id):
     posts = Info.objects.filter(category_id=cat_id)
     if len(posts) == 0:
         raise Http404()
     context = {
         'title':'Компьютерная игры',
-        'menu': menu,
         'posts': posts,
         'cat_selected': cat_id
     }
