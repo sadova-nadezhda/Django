@@ -45,7 +45,18 @@ def login(request):
 def post(request, post_id):
     return HttpResponse(f'пост с id = {post_id}')
 def category(request, cat_id):
-    return HttpResponse(f'category с id = {cat_id}')
+    posts = Info.objects.filter(category_id=cat_id)
+    if len(posts) == 0:
+        raise Http404()
+    cats = Category.objects.all()
+    context = {
+        'title':'Компьютерная игры',
+        'menu': menu,
+        'posts': posts,
+        'cats': cats,
+        'cat_selected': cat_id
+    }
+    return render(request, 'index/index.html', context=context)
 
 # def category(request, catid):
 #     # if request.GET:

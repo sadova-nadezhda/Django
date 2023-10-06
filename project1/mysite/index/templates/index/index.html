@@ -7,13 +7,22 @@
         <ul class="posts__list">
             {% for post in posts %}
             <li class="posts__item">
-                <h2 class="posts__caption">{{ post.title }}</h2>
-                <div class="posts__desc">
-                    {% autoescape off %}
-                    {{ post.content | linebreaks | truncatewords:50 }}
-                    {% endautoescape %}
+                <div class="posts__meta">
+                    <div>Категория: {{post.category.name }}</div>
+                    <div>Дата: {{ post.time_update|date:"D d M Y" }}</div>
                 </div>
-                <a href="{{ post.get_absolute_url }}" class="posts__link">Подробнее...</a>
+                <div class="posts__wrap">
+                    <div class="posts__img"><img src="{{post.photo.url}}"></div>
+                    <div class="posts__desc">
+                        <h2 class="posts__caption">{{ post.title }}</h2>
+                        <div class="posts__txt">
+                            {% autoescape off %}
+                            {{ post.content | linebreaks | truncatewords:50 }}
+                            {% endautoescape %}
+                        </div>
+                        <a href="{{ post.get_absolute_url }}" class="posts__link">Подробнее...</a>
+                    </div>
+                </div>
             </li>
             {% endfor %}
         </ul>

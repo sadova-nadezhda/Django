@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from  django.urls import path, include
+from django.urls import path, include
 from index.views import *
 from mysite import settings
 
@@ -29,8 +29,8 @@ urlpatterns = [
     # path('category/', category), # http://127.0.0.1:8000/category/
 ]
 
-# if settings.DEBUG:
-#     urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # handler500 - ошибка сервера
 # handler403 - доступ запрещен

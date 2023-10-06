@@ -92,10 +92,23 @@ body {
     margin-bottom: 0;
     border-bottom: none;
 }
+.posts__wrap {
+    display: grid;
+    grid-template-columns: 25% 1fr;
+    gap: 20px;
+}
+.posts__img {
+    height: 400px;
+}
+.posts__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .posts__caption {
     margin-bottom: 10px;
 }
-.posts__desc {
+.posts__txt {
     margin-bottom: 30px;
 }
 .posts__link {
@@ -107,6 +120,13 @@ body {
     font-size: 18px;
     text-decoration: none;
     transition: all 0.2s liner;
+}
+.posts__meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff;
 }
 /* main */
 .main {
