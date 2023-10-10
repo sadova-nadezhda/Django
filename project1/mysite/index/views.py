@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+
+from .forms import AddPostForm
 from .models import *
 
 # Create your views here.
@@ -42,8 +44,15 @@ def post(request, post_slug):
     }
     return render(request, 'index/post.html', context=context)
 def addpost(request):
+    if request.method == 'POST':
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = AddPostForm()
     context = {
         'title': 'Добавление поста',
+        'form': form,
     }
     return render(request, 'index/addpost.html', context=context)
 def category(request, cat_id):
