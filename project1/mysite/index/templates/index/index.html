@@ -1,5 +1,5 @@
 {% extends 'index/base.html' %}
-
+{% load static %}
 {% block content %}
 
     <div class="content">
@@ -12,7 +12,15 @@
                     <div>Дата: {{ post.time_update|date:"D d M Y" }}</div>
                 </div>
                 <div class="posts__wrap">
-                    <div class="posts__img"><img src="{{post.photo.url}}"></div>
+
+                    <div class="posts__img">
+                        {% if post.photo %}
+                            <img src="{{post.photo.url}}">
+                        {% else %}
+                            <img src="{% static 'index/images/image.png' %}">
+                        {% endif %}
+                    </div>
+
                     <div class="posts__desc">
                         <h2 class="posts__caption">{{ post.title }}</h2>
                         <div class="posts__txt">
