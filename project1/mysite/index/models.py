@@ -16,7 +16,7 @@ class Info(models.Model):
     def __str__(self):
         return self.title
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_id': self.pk})
+        return reverse('post', kwargs={'post_slug': self.slug})
     class Meta:
         verbose_name = 'Игра'
         verbose_name_plural = 'Игры'

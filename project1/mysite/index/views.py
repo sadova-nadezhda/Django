@@ -33,14 +33,19 @@ def contact(request):
     return HttpResponse('Обратная связь')
 def login(request):
     return HttpResponse('Авторизация')
-def post(request, post_id):
-    post = get_object_or_404(Info, pk=post_id)
+def post(request, post_slug):
+    post = get_object_or_404(Info, slug=post_slug)
     context = {
         'title': post.title,
         'post': post,
         'cat_selected': post.category_id
     }
     return render(request, 'index/post.html', context=context)
+def addpost(request):
+    context = {
+        'title': 'Добавление поста',
+    }
+    return render(request, 'index/addpost.html', context=context)
 def category(request, cat_id):
     posts = Info.objects.filter(category_id=cat_id)
     if len(posts) == 0:

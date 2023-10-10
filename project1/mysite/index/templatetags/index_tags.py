@@ -23,6 +23,7 @@ def show_header():
     menu = [
         {'title': 'Главная', 'url_name': 'home'},
         {'title': 'О компании', 'url_name': 'about'},
+        {'title': 'Добавление поста', 'url_name': 'addpost'},
         {'title': 'Контакты', 'url_name': 'contact'},
         {'title': 'Войти', 'url_name': 'login'}
     ]
