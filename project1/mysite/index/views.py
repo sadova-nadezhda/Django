@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 from .forms import AddPostForm
 from .models import *
@@ -18,14 +19,29 @@ from .models import *
     # </html>
     # ''')
 
-def main(request):
-    posts = Info.objects.all()
-    context = {
-        'title':'Компьютерная игры',
-        'posts': posts,
-        'cat_selected': 0
-    }
-    return render(request, 'index/index.html', context=context)
+#     <name app>/<name model>_list.html
+class Home(ListView):
+    model = Info
+    template_name = 'index/index.html'
+    context_object_name = 'posts'
+    # extra_context = {'title':'Компьютерная игры'}
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Компьютерная игры'
+        context['cat_selected'] = 0
+        # context['menu'] = menu
+        return context
+    def get_queryset(self):
+        return Info.objects.filter(is_published=True)
+
+# def main(request):
+#     posts = Info.objects.all()
+#     context = {
+#         'title':'Компьютерная игры',
+#         'posts': posts,
+#         'cat_selected': 0
+#     }
+#     return render(request, 'index/index.html', context=context)
 def about(request):
     context = {
         'title':'Компьютерная игры',
@@ -45,11 +61,12 @@ def post(request, post_slug):
     return render(request, 'index/post.html', context=context)
 def addpost(request):
     if request.method == 'POST':
-        form = AddPostForm(request.POST)
+        form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             # print(form.cleaned_data)
             try:
-                Info.objects.create(**form.cleaned_data)
+                # Info.objects.create(**form.cleaned_data)
+                form.save()
                 return redirect('home')
             except:
                 form.add_error(None, 'Ошибка добавления')

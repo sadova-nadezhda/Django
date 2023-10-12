@@ -175,7 +175,40 @@ body {
 .content {
     padding: 50px;
 }
-
+/* form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 30%;
+}
+.form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.form__input {
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    gap: 10px;
+}
+.form__input input, .form__input select {
+    padding: 8px 16px;
+}
+.form__input input[type="checkbox"] {
+    margin-right: auto;
+}
+.form__input textarea {
+    resize: none;
+    height: 150px;
+    padding: 8px 16px;
+}
+.form__button {
+    padding: 8px 16px;
+}
+.form__error {
+    color: red;
+}
 
 
 
