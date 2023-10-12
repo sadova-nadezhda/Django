@@ -77,14 +77,14 @@ def addpost(request):
         'form': form,
     }
     return render(request, 'index/addpost.html', context=context)
-def category(request, cat_id):
-    posts = Info.objects.filter(category_id=cat_id)
+def category(request, cat_slug):
+    posts = Info.objects.filter(category__slug=cat_slug)
     if len(posts) == 0:
         raise Http404()
     context = {
         'title':'Компьютерная игры',
         'posts': posts,
-        'cat_selected': cat_id
+        'cat_selected': posts[0].category.pk
     }
     return render(request, 'index/index.html', context=context)
 
