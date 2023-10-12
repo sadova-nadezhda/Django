@@ -77,16 +77,30 @@ def addpost(request):
         'form': form,
     }
     return render(request, 'index/addpost.html', context=context)
-def category(request, cat_slug):
-    posts = Info.objects.filter(category__slug=cat_slug)
-    if len(posts) == 0:
-        raise Http404()
-    context = {
-        'title':'Компьютерная игры',
-        'posts': posts,
-        'cat_selected': posts[0].category.pk
-    }
-    return render(request, 'index/index.html', context=context)
+
+class Category(ListView):
+    model = Info
+    template_name = 'index/index.html'
+    context_object_name = 'posts'
+    allow_empty = False
+    def get_queryset(self):
+        return Info.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Компьютерная игры'
+        context['cat_selected'] = context['posts'][0].category.pk
+        # context['menu'] = menu
+        return context
+# def category(request, cat_slug):
+#     posts = Info.objects.filter(category__slug=cat_slug)
+#     if len(posts) == 0:
+#         raise Http404()
+#     context = {
+#         'title':'Компьютерная игры',
+#         'posts': posts,
+#         'cat_selected': posts[0].category.pk
+#     }
+#     return render(request, 'index/index.html', context=context)
 
 # def category(request, catid):
 #     # if request.GET:
