@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -6,67 +8,73 @@ from django.views.generic import ListView, DetailView, CreateView, TemplateView
 
 from .forms import AddPostForm
 from .models import *
+from .utils import *
 
 # <name app>/<name model>_list.html
-class Home(ListView):
+class Home(DataMixin, ListView):
     model = Info
     template_name = 'index/index.html'
     context_object_name = 'posts'
-    # extra_context = {'title':'Компьютерная игры'}
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Компьютерная игры'
-        context['cat_selected'] = 0
-        # context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title='Компьютерная игры')
+        return dict(list(context.items()) + list(c_def.items()))
     def get_queryset(self):
         return Info.objects.filter(is_published=True)
 
-class AboutView(TemplateView):
+class AboutView(DataMixin, TemplateView):
     model = Info
     template_name = 'index/about.html'
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Компьютерная игры'
-        return context
+        c_def = self.get_user_context(title='Компьютерная игры')
+        return dict(list(context.items()) + list(c_def.items()))
 
-class PostView(DetailView):
+class PostView(DataMixin, DetailView):
     model = Info
     template_name = 'index/post.html'
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['post']
-        return context
+        c_def = self.get_user_context(title=context['post'])
+        return dict(list(context.items()) + list(c_def.items()))
 
-class AddPost(CreateView):
+class AddPost(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
     template_name = 'index/addpost.html'
     success_url = reverse_lazy('home')
+    # login_url = reverse_lazy('home')
+    raise_exception = True
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Добавление поста'
-        return context
+        c_def = self.get_user_context(title='Добавление статьи')
+        return dict(list(context.items()) + list(c_def.items()))
 
-class CategoryView(ListView):
+class CategoryView(DataMixin, ListView):
     model = Info
     template_name = 'index/index.html'
     context_object_name = 'posts'
     allow_empty = False
     def get_queryset(self):
         return Info.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['title'] = 'Компьютерная игры'
+    #     context['cat_selected'] = context['posts'][0].category.pk
+    #     return context
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Компьютерная игры'
-        context['cat_selected'] = context['posts'][0].category.pk
-        return context
+        c_def = self.get_user_context(title=str(context['posts'][0].category),
+                                      cat_selected = context['posts'][0].category.pk)
+        return dict(list(context.items()) + list(c_def.items()))
 
 # def about(request):
 #     context = {
 #         'title':'Компьютерная игры',
 #     }
 #     return render(request, 'index/about.html', context=context)
+# @login_required
 def contact(request):
     return HttpResponse('Обратная связь')
 def login(request):

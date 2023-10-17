@@ -26,9 +26,35 @@
                 <!--<li><a>РПГ</a></li>-->
             </ul>
         {% endblock %}
-        {% block content %}
-        {% endblock %}
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+            {% if page_obj.has_other_pages %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="pagination__item">
+                        <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+                    </li>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li class="pagination__item current">{{ p }}</li>
+                    {% elif p > page_obj.number and p < page_obj.number %}
+                    <li class="pagination__item">
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="pagination__item">
+                            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
     </main>
     {% endblock %}
+    <script src="{% static 'index/js/script.js'%}"></script>
 </body>
 </html>
