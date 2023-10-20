@@ -25,6 +25,7 @@ def show_header():
         {'title': 'О компании', 'url_name': 'about'},
         {'title': 'Добавление поста', 'url_name': 'addpost'},
         {'title': 'Контакты', 'url_name': 'contact'},
+        {'title': 'Регистрация', 'url_name': 'register'},
         {'title': 'Войти', 'url_name': 'login'}
     ]
     return {'menu': menu}

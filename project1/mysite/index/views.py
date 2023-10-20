@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 
-from .forms import AddPostForm
+from .forms import AddPostForm, RegisterUserForm
 from .models import *
 from .utils import *
 
@@ -20,7 +20,7 @@ class Home(DataMixin, ListView):
         c_def = self.get_user_context(title='Компьютерная игры')
         return dict(list(context.items()) + list(c_def.items()))
     def get_queryset(self):
-        return Info.objects.filter(is_published=True)
+        return Info.objects.filter(is_published=True).select_related('category')
 
 class AboutView(DataMixin, TemplateView):
     model = Info
@@ -57,7 +57,7 @@ class CategoryView(DataMixin, ListView):
     context_object_name = 'posts'
     allow_empty = False
     def get_queryset(self):
-        return Info.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True)
+        return Info.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True).select_related('category')
     # def get_context_data(self, *, object_list=None, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['title'] = 'Компьютерная игры'
@@ -81,6 +81,14 @@ def contact(request):
 def login(request):
     return HttpResponse('Авторизация')
 
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'index/register.html'
+    success_url = reverse_lazy('login')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Регистрация')
+        return dict(list(context.items()) + list(c_def.items()))
 
 # Create your views here.
 # def main(request):
