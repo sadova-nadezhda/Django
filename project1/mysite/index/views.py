@@ -58,11 +58,6 @@ class CategoryView(DataMixin, ListView):
     allow_empty = False
     def get_queryset(self):
         return Info.objects.filter(category__slug=self.kwargs['cat_slug'], is_published=True).select_related('category')
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['title'] = 'Компьютерная игры'
-    #     context['cat_selected'] = context['posts'][0].category.pk
-    #     return context
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=str(context['posts'][0].category),
