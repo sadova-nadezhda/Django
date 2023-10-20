@@ -1,6 +1,6 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponsePermanentRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -77,6 +77,7 @@ class CategoryView(DataMixin, ListView):
 # @login_required
 def contact(request):
     return HttpResponse('Обратная связь')
+# @permission_required()
 def login(request):
     return HttpResponse('Авторизация')
 
