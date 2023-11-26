@@ -26,13 +26,6 @@ If you don't have django installed for python 3 then run:
 And then:
 
     $ python3 -m django startproject <project_name>
-      
-      
-After that just install the local dependencies, run migrations, and start the server.
-
-{% endif %}
-
-# {{ project_name|title }}
 
 # Getting Started
 
